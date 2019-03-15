@@ -2,8 +2,14 @@
 
 Meta search engine inspired by [searchx](https://asciimoo.github.io/searx/).
 
-- Engines: google, duckduckgo, startpage(?)
-- https://github.com/phoenixframework/phoenix_live_view
+## Goals
+
+- Supported engines: google, duckduckgo, startpage(?)
+- Easy to add new engine
+- Demoable (ie deployed somewhere)
+- Easy to self host (for a tech savy person) 
+- https://github.com/phoenixframework/phoenix_live_view for rich UX
+- Small code base
 
 ---
 
