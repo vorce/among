@@ -52,7 +52,8 @@ config :among, AmongWeb.Endpoint,
       ~r{priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$},
       ~r{priv/gettext/.*(po)$},
       ~r{lib/among_web/views/.*(ex)$},
-      ~r{lib/among_web/templates/.*(eex)$}
+      ~r{lib/among_web/templates/.*(eex)$},
+      ~r{lib/among_web/live/.*(ex)$}
     ]
   ]
 

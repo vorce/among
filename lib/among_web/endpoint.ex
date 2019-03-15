@@ -1,9 +1,11 @@
 defmodule AmongWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :among
 
-  socket "/socket", AmongWeb.UserSocket,
-    websocket: true,
-    longpoll: false
+  # socket "/socket", AmongWeb.UserSocket,
+  #   websocket: true,
+  #   longpoll: false
+
+  socket "/live", Phoenix.LiveView.Socket
 
   # Serve at "/" the static files from "priv/static" directory.
   #

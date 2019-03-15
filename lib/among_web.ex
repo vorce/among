@@ -42,6 +42,8 @@ defmodule AmongWeb do
       import AmongWeb.ErrorHelpers
       import AmongWeb.Gettext
       alias AmongWeb.Router.Helpers, as: Routes
+
+      import Phoenix.LiveView, only: [live_render: 2, live_render: 3]
     end
   end
 
@@ -57,6 +59,8 @@ defmodule AmongWeb do
     quote do
       use Phoenix.Channel
       import AmongWeb.Gettext
+
+      import Phoenix.LiveView.Router
     end
   end
 

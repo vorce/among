@@ -12,15 +12,19 @@ config :among, AmongWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "d9IKM91aXJkRy5MESHxW2EPol2BNSMTPQMiwweiaenbsjUnurDuAmz+WrnogygKX",
   render_errors: [view: AmongWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Among.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub: [name: Among.PubSub, adapter: Phoenix.PubSub.PG2],
+  live_view: [
+     signing_salt: System.get_env("LIVEVIEW_SECRET_SALT") || "NnR5kT3XBKIdzuACEw590/+0mkfdpkRv"
+   ]
 
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-# Use Jason for JSON parsing in Phoenix
-config :phoenix, :json_library, Jason
+config :phoenix,
+  template_engines: [leex: Phoenix.LiveView.Engine],
+  json_library: Jason
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
