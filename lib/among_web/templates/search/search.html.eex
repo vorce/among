@@ -1,5 +1,5 @@
-<div class="row">
-  <div class="col-12">
+<div class="row justify-content-center">
+<div class="col-7">
     <%= form_for @conn, Routes.search_path(@conn, :index), [method: :get], fn f -> %>
       <div class="input-group mb-3">
         <%= search_input(f, :query, class: "form-control", maxlength: "100", placeholder: "", "aria-label": "Search query", "aria-describedby": "basic-addon2") %>
@@ -8,5 +8,5 @@
         </div>
       </div>
     <% end %>
-  </div>
+</div>
 </div>
