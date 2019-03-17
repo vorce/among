@@ -13,9 +13,11 @@ defmodule Among.Engine.MultiTest do
       }
 
       static_response_hits = Among.Engine.Static.response().hits
+      total_hits = length(static_response_hits) * length(engine.engines)
 
       assert {:ok, response} = Among.Search.search(engine)
-      assert length(response.hits) == length(static_response_hits) * length(engine.engines)
+      assert length(response.hits) == total_hits
+      assert response.total_results == total_hits
     end
   end
 end

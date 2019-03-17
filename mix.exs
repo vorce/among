@@ -5,7 +5,7 @@ defmodule Among.MixProject do
     [
       app: :among,
       version: "0.1.0",
-      elixir: "~> 1.5",
+      elixir: "~> 1.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
@@ -40,7 +40,8 @@ defmodule Among.MixProject do
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
-      {:httpoison, "~> 1.5"}
+      {:httpoison, "~> 1.5"},
+      {:floki, "~> 0.20"}
     ]
   end
 end

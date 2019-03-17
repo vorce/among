@@ -5,9 +5,7 @@ defmodule Among.Engine.Noop do
   alias Among.Search.Response
   require Logger
 
-  defstruct name: "Noop",
-            query: "",
-            options: []
+  defstruct name: "Noop"
 
   defimpl Among.Search, for: Among.Engine.Noop do
     def search(data = %Among.Engine.Noop{}) do

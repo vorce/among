@@ -5,9 +5,7 @@ defmodule Among.Engine.Static do
   alias Among.Search.Response
   require Logger
 
-  defstruct name: "Static",
-            query: "",
-            options: []
+  defstruct name: "Static"
 
   defimpl Among.Search, for: Among.Engine.Static do
     def search(data = %Among.Engine.Static{}) do

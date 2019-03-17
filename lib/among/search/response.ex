@@ -1,5 +1,6 @@
 defmodule Among.Search.Response do
   defstruct hits: [],
             engine: nil,
-            errors: []
+            errors: [],
+            total_results: 0
 end

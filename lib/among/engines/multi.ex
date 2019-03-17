@@ -21,8 +21,8 @@ defmodule Among.Engine.Multi do
   @doc """
   Searches in all given engines, returns a response struct
   """
-  @spec do_search(engines :: list, options :: Keyword.t()) :: {:ok, Response.t()} | {:error, any}
-  def do_search(engines, _options \\ []) do
+  @spec do_search(engines :: list) :: {:ok, Response.t()} | {:error, any}
+  def do_search(engines) do
     combined_response =
       engines
       |> Enum.map(&Among.Search.search/1)
@@ -36,6 +36,12 @@ defmodule Among.Engine.Multi do
   end
 
   def combine_responses({:ok, response}, %{hits: hits} = combined) do
-    %Response{combined | hits: List.flatten([response.hits | hits])}
+    hit_count = length(response.hits)
+
+    %Response{
+      combined
+      | hits: List.flatten([response.hits | hits]),
+        total_results: combined.total_results + hit_count
+    }
   end
 end
