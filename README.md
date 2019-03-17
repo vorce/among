@@ -1,6 +1,6 @@
 # Among
 
-Meta search engine inspired by [searchx](https://asciimoo.github.io/searx/).
+Meta search engine inspired by [searx](https://asciimoo.github.io/searx/).
 
 ## Goals
 

@@ -1,14 +1,30 @@
 defmodule AmongWeb.SearchController do
   use AmongWeb, :controller
 
-  alias Among.Searches
-  alias Among.Searches.Search
+  alias Among.Search
 
   def index(conn, %{"query" => query}) when is_binary(query) do
-    with {:ok, results} <- Among.Searches.search(query) do
-      render(conn, "index.html", results: results)
+    engines = [%Among.Engine.Noop{query: query}]
+
+    with {:ok, returned} <- Search.Multi.search(engines) do
+      conn
+      |> flash_on_error(returned)
+      |> flash_on_empty(returned)
+      |> render("index.html", results: returned.results)
     end
   end
+
+  defp flash_on_error(conn, %{errors: []}), do: conn
+
+  defp flash_on_error(conn, %{errors: errors}) do
+    put_flash(conn, :error, "Problems encountered: #{inspect(errors)}")
+  end
+
+  defp flash_on_empty(conn, %{results: []}) do
+    put_flash(conn, :info, "No results for your query, try something else")
+  end
+
+  defp flash_on_empty(conn, _), do: conn
 
   # def index(conn, _params) do
   #   searches = Searches.list_searches()

@@ -3,8 +3,8 @@
 
 <div class="card">
   <div class="card-body">
-    <h5 class="card-title"><%= @paper.title %></h5>
-    <h6 class="card-subtitle mb-2 text-muted"><%= @paper.published_at %> <span class="badge badge-secondary"><%= @paper.source %></span></h6>
+    <h5 class="card-title"><%= @result.title %></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= @result.published_at %> <span class="badge badge-secondary"><%= @result.source %></span></h6>
     <p class="card-text">
       <details>
         <summary><%= @result.summary |> String.split(".") |> List.first() |> Kernel.<>(".") %></summary>
