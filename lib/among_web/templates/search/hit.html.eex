@@ -1,0 +1,16 @@
+<div class="row">
+<div class="col">
+
+<div class="card">
+  <div class="card-body">
+    <h5 class="card-title"><a href="<%= @hit.url %>"><%= @hit.title %></a></h5>
+    <h6 class="card-subtitle mb-2 text-muted"><%= @hit.url %></h6>
+    <p class="card-text">
+      <%= @hit.content %>
+    </p>
+    <!-- <a href="<%= @hit.url %>" class="card-link"><%= @hit.url %></a> -->
+  </div>
+</div>
+
+</div>
+</div>

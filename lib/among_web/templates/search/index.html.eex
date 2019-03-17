@@ -1,5 +1,5 @@
 <%= render "search.html", conn: @conn %>
 
-<%= for result <- @results do %>
-  <%= render "result.html", result: result %>
+<%= for hit <- @response.hits do %>
+  <%= render "hit.html", hit: hit, engine: @response.engine %>
 <% end %>

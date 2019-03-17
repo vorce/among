@@ -4,13 +4,19 @@ defmodule AmongWeb.SearchController do
   alias Among.Search
 
   def index(conn, %{"query" => query}) when is_binary(query) do
-    engines = [%Among.Engine.Noop{query: query}]
+    engine = %Among.Engine.ConcurrentMulti{
+      query: query,
+      engines: [
+        %Among.Engine.Noop{query: query},
+        %Among.Engine.Static{query: query}
+      ]
+    }
 
-    with {:ok, returned} <- Search.Multi.search(engines) do
+    with {:ok, response} <- Search.search(engine) do
       conn
-      |> flash_on_error(returned)
-      |> flash_on_empty(returned)
-      |> render("index.html", results: returned.results)
+      |> flash_on_error(response)
+      |> flash_on_empty(response)
+      |> render("index.html", response: response)
     end
   end
 

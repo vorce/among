@@ -12,7 +12,7 @@ defmodule Among.Engine.Noop do
   defimpl Among.Search, for: Among.Engine.Noop do
     def search(data = %Among.Engine.Noop{}) do
       Logger.info("Searching for: #{inspect(binding())}")
-      {:ok, %Response{}}
+      {:ok, %Response{engine: __MODULE__}}
     end
   end
 end
