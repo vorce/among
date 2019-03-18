@@ -23,10 +23,12 @@ defmodule Among.Engine.MultiTest do
 
   describe "combine_responses/2" do
     test "returns a combined response struct" do
-      combined = %Among.Search.Response{}
+      results = [
+        {:ok, %Among.Search.Response{hits: [1, 2]}},
+        {:ok, %Among.Search.Response{hits: [1, 2]}}
+      ]
 
-      combined = Multi.combine_responses({:ok, %Among.Search.Response{hits: [1, 2]}}, combined)
-      combined = Multi.combine_responses({:ok, %Among.Search.Response{hits: [1, 2]}}, combined)
+      combined = Enum.reduce(results, %Among.Search.Response{}, &Multi.combine_responses/2)
 
       assert combined.total_results == 4
       assert combined.hits == [1, 2, 1, 2]

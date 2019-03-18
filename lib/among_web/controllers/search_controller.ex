@@ -7,6 +7,7 @@ defmodule AmongWeb.SearchController do
     engine = %Among.Engine.ConcurrentMulti{
       query: query,
       engines: [
+        %Among.Engine.Duckduckgo{query: query},
         %Among.Engine.Google{query: query},
         %Among.Engine.Noop{}
       ]

@@ -3,7 +3,9 @@ defmodule Among.Engine.Google do
   Google engine
   Modelled after https://github.com/asciimoo/searx/blob/master/searx/engines/google.py
   """
+  alias Among.Dom
   alias Among.Search.Response
+
   require Logger
 
   defstruct name: "Google",
@@ -59,8 +61,9 @@ defmodule Among.Engine.Google do
   def hit_map(raw_hit) do
     %{
       title: extract_title(raw_hit),
-      url: extract_url(raw_hit, "https://" <> @google_hostname),
-      content: extract_content(raw_hit)
+      url: extract_url(raw_hit, "https://#{@google_hostname}"),
+      content: extract_content(raw_hit),
+      source: "Google"
     }
   end
 
@@ -69,36 +72,17 @@ defmodule Among.Engine.Google do
     raw_hit
     |> Floki.find(@hit_title_selector)
     |> List.first()
-    |> extract_text()
-  end
-
-  def extract_text({_tag_name, _attributes, [text]}) when is_binary(text), do: text
-  def extract_text(text) when is_binary(text), do: text
-  def extract_text({_tag_name, _attributes, []}), do: ""
-
-  def extract_text({_tag_name, _attributes, children}) when is_list(children) do
-    children
-    |> Enum.map(&extract_text/1)
-    |> Enum.join(" ")
-    |> String.trim()
-  end
-
-  def extract_text(element) do
-    # raise("Unable to extract text from: #{inspect(element)}")
-    Logger.error("Unable to extract text from: #{inspect(element)}, returning empty")
-    ""
+    |> Dom.extract_text()
   end
 
   @hit_url_selector "h3 > a"
   def extract_url(raw_hit, base_url) do
     raw_hit
     |> Floki.find(@hit_url_selector)
+    |> Floki.attribute("href")
     |> List.first()
-    |> elem(1)
-    |> Enum.find(fn attr -> is_tuple(attr) and elem(attr, 0) == "href" end)
-    |> elem(1)
     |> unpacked_url()
-    |> fix_url_path(base_url)
+    |> Dom.fix_url_path(base_url)
   end
 
   @google_url_parameter "q"
@@ -110,27 +94,12 @@ defmodule Among.Engine.Google do
     |> Map.get(@google_url_parameter, google_uri)
   end
 
-  def fix_url_path(url, base_url) do
-    cond do
-      String.starts_with?(url, "//") ->
-        "http:" <> url
-
-      String.starts_with?(url, "/") ->
-        base_url <> url
-
-      true ->
-        url
-    end
-  end
-
   @hit_content_selector "span[class=\"st\"]"
   def extract_content(raw_hit) do
     raw_hit
     |> Floki.find(@hit_content_selector)
     |> List.first()
-    |> elem(2)
-    |> Enum.map(&extract_text/1)
-    |> Enum.join(" ")
+    |> Dom.extract_text()
   end
 
   def search_url(query) do

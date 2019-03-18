@@ -71,10 +71,11 @@ defmodule Among.Engine.GoogleTest do
 
     test "first hit values", %{hits: hits} do
       assert hd(hits) == %{
+               title: "Game of Thrones - Official Website for the HBO Series - HBO.com",
+               url: "https://www.hbo.com/game-of-thrones",
                content:
-                 "The official website for  Game of Thrones  on HBO, featuring full episodes online,   \ninterviews, schedule information and episode guides.",
-               title: "Game of Thrones  - Official Website for the HBO Series - HBO.com",
-               url: "https://www.hbo.com/game-of-thrones"
+                 "The official website for Game of Thrones on HBO, featuring full episodes online, interviews, schedule information and episode guides.",
+               source: "Google"
              }
     end
 
@@ -84,19 +85,6 @@ defmodule Among.Engine.GoogleTest do
         assert Map.has_key?(hit, :url)
         assert Map.has_key?(hit, :content)
       end)
-    end
-  end
-
-  describe "fix_url_path/2" do
-    test "adds base_url to relative url" do
-      base_url = "https://www.google.com"
-      url = "/url?q=https://en.wikipedia.org/wiki/Game_of_Thrones&sa=U&ved=0L1Ou"
-      assert Google.fix_url_path(url, base_url) == base_url <> url
-    end
-
-    test "adds http to missing protocol url" do
-      url = "//example.com"
-      assert Google.fix_url_path(url, "") == "http:" <> url
     end
   end
 
