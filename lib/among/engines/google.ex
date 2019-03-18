@@ -97,7 +97,17 @@ defmodule Among.Engine.Google do
     |> elem(1)
     |> Enum.find(fn attr -> is_tuple(attr) and elem(attr, 0) == "href" end)
     |> elem(1)
+    |> unpacked_url()
     |> fix_url_path(base_url)
+  end
+
+  @google_url_parameter "q"
+  defp unpacked_url(google_uri) do
+    google_uri
+    |> URI.parse()
+    |> Map.get(:query, "")
+    |> URI.decode_query()
+    |> Map.get(@google_url_parameter, google_uri)
   end
 
   def fix_url_path(url, base_url) do
