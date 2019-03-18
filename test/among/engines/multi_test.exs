@@ -20,4 +20,16 @@ defmodule Among.Engine.MultiTest do
       assert response.total_results == total_hits
     end
   end
+
+  describe "combine_responses/2" do
+    test "returns a combined response struct" do
+      combined = %Among.Search.Response{}
+
+      combined = Multi.combine_responses({:ok, %Among.Search.Response{hits: [1, 2]}}, combined)
+      combined = Multi.combine_responses({:ok, %Among.Search.Response{hits: [1, 2]}}, combined)
+
+      assert combined.total_results == 4
+      assert combined.hits == [1, 2, 1, 2]
+    end
+  end
 end
