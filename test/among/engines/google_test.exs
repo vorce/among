@@ -9,7 +9,7 @@ defmodule Among.Engine.GoogleTest do
 
   describe "result_count/1" do
     test "returns result count" do
-      assert Google.result_count(@google_response_html_tree) == 342_000_000
+      assert Google.result_count(@google_response_html_tree) == 323_000_000
     end
 
     test "other format returns -1" do
@@ -24,21 +24,20 @@ defmodule Among.Engine.GoogleTest do
     end
 
     test "returns hits", %{hits: hits} do
-      assert length(hits) == 8
+      assert length(hits) == 9
     end
 
-    test "first hit", %{hits: hits} do
+    test "first hit values", %{hits: hits} do
       assert hd(hits) == %{
                content:
-                 "The official website for  Game of Thrones  on HBO, featuring full episodes online, interviews, schedule information and episode guides.",
-               title: "Game of Thrones - Official Website for the HBO Series - HBO.com",
-               url: "https://www.hbo.com/game-of-thrones"
+                 "The official website for  Game of Thrones  on HBO, featuring full episodes online,   \ninterviews, schedule information and episode guides.",
+               title: "Game of Thrones  - Official Website for the HBO Series - HBO.com",
+               url:
+                 "https://www.google.com/url?q=https://www.hbo.com/game-of-thrones&sa=U&ved=0ahUKEwjc2eGgk4vhAhUhlosKHbm5AAwQFggVMAA&usg=AOvVaw2wV4XmaRgDDVE4eJejDrnR"
              }
     end
 
     test "hits contains required fields", %{hits: hits} do
-      # hits = Google.hits(@google_response_html_tree)
-
       Enum.each(hits, fn hit ->
         assert Map.has_key?(hit, :title)
         assert Map.has_key?(hit, :url)

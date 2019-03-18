@@ -17,6 +17,7 @@ defmodule Among.Engine.Static do
   def response() do
     %Response{
       engine: __MODULE__,
+      total_results: 3,
       hits: [
         %{
           url: "http://www.google.com",
