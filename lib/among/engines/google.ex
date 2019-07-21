@@ -39,9 +39,11 @@ defmodule Among.Engine.Google do
   @result_count_selector "div[id=\"resultStats\"]"
   @whitespace_regex ~r/\s/iu
   def result_count(parsed) do
-    [{"div", _, [count_string | _]} | _] = Floki.find(parsed, @result_count_selector)
-
-    # TODO: Fallback to -1 or something...
+    count_string =
+      case Floki.find(parsed, @result_count_selector) do
+        [{"div", _, [result_stat | _]} | _] -> result_stat
+        _unknown -> "About -1 results"
+      end
 
     count_string
     |> String.replace("About", "")
