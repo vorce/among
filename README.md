@@ -1,3 +1,5 @@
+**This project is abandoned for now**
+
 # Among
 
 Meta search engine inspired by [searx](https://asciimoo.github.io/searx/).
